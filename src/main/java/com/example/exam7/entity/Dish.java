@@ -14,5 +14,7 @@ public class Dish {
     private String name;
     private String type;
     private Integer price;
+    private Long institution_id;
+
 
 }

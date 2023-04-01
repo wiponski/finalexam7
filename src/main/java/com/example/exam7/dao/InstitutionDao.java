@@ -1,14 +1,17 @@
 package com.example.exam7.dao;
 
 import com.example.exam7.entity.Client;
+import com.example.exam7.entity.Dish;
 import com.example.exam7.entity.Institution;
 import com.example.exam7.unit.GenerateData;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 @Component
 public class InstitutionDao extends BaseDao  {
@@ -26,6 +29,15 @@ public class InstitutionDao extends BaseDao  {
             ps.setString(2,institution.getDescription());
             return ps;
         });
+    }
+
+    public Optional<Dish> findById(Long id) {
+        String sql = "select * " +
+                "from movie_image " +
+                "where id = ?";
+        return Optional.ofNullable(DataAccessUtils.singleResult(
+                jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Dish.class), id)
+        ));
     }
     public List<Institution> getAllInstitutions(){
         String query = "select * from institutions;";
